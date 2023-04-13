@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Pygmalion .json 2 KoboldAI character (or something like that)</title>
+    
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+      }
+      
+      h1 {
+        text-align: center;
+        color: #333333;
+      }
+      
+      label {
+        display: block;
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+        color: #333333;
+      }
+      
+      input[type="text"], textarea {
+        display: block;
+        width: 100%;
+        padding: 0.5rem;
+        font-size: 1.2rem;
+        border: 2px solid #333333;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+      }
+      
+      button {
+        display: block;
+        background-color: #333333;
+        color: #ffffff;
+        padding: 0.5rem;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      
+      button:hover {
+        background-color: #666666;
+      }
+      
+      textarea {
+        height: 10rem;
+      }
+      
+      #outputText {
+        font-size: 1.2rem;
+        line-height: 1.5;
+        border-color: #666666;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Pygmalion .json 2 KoboldAI character (or something like that)</h1>
+    <label for="inputText">Paste the contents of the pygmalion .json file:</label>
+    <textarea id="inputText" rows="5"></textarea>
+    <button onclick="replaceAs()">Create KoboldAI... Thing</button>
+    <br>
+    <label for="outputText">Result:</label>
+    <textarea id="outputText" rows="5" readonly></textarea>
+    
+    <script>
+      function replaceAs() {
+        // Get the input text
+        var input = document.getElementById("inputText").value;
+
+        var char;
+
+        try {
+            char = JSON.parse(input)
+        } catch(e) {
+            document.getElementById("outputText").value = "Error in inputted JSON: " + e;
+        }
+        // Replace all As with Bs
+        //var output = input.replace(/a/gi, "b");
+
+        var intro = ""
+        name = char.char_name
+        intro += char.char_persona
+        intro += "\n\nCircumstances and context of the dialogue: "
+        intro += char.world_scenario
+        intro += "\nThis is how " + name + " should talk:\n"
+        intro += char.example_dialogue
+        intro += "\n\n\nThen the roleplay chat between some people and " + name + " begins.\n"
+        intro += char.char_greeting
+        
+        // Set the output text
+        document.getElementById("outputText").value = intro;
+      }
+    </script>
+    <br>
+    <br>
+    <label style=" color: #666666; font-style: italic;">Half-made with ChatGPT because I am very lazy</label>
+
+  </body>
+</html>
